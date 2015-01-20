@@ -25,7 +25,7 @@
 
   <!--The Commands section is where we the commands, menus and menu groups are defined.
       This section uses a Guid to identify the package that provides the command defined inside it. -->
-  <Commands package="guidVS2013Pkg">
+  <Commands package="guidVSXMusicPkg">
     <!-- Inside this section we have different sub-sections: one for the menus, another  
     for the menu groups, one for the buttons (the actual commands), one for the combos 
     and the last one for the bitmaps used. Each element is identified by a command id that  
@@ -41,7 +41,7 @@
          must be a menu. -->
     <Groups>
 
-      <Group guid="guidVS2013CmdSet" id="MyMenuGroup" priority="0x0600">
+      <Group guid="guidVSXMusicCmdSet" id="MyMenuGroup" priority="0x0600">
         <Parent guid="guidSHLMainMenu" id="IDM_VS_MENU_TOOLS"/>
       </Group>
       
@@ -61,8 +61,8 @@
               <CommandFlag>DynamicVisibility</CommandFlag>
           If you do not want an image next to your command, remove the Icon node /> -->
 
-      <Button guid="guidVS2013CmdSet" id="cmdidMyCommand" priority="0x0100" type="Button">
-        <Parent guid="guidVS2013CmdSet" id="MyMenuGroup" />
+      <Button guid="guidVSXMusicCmdSet" id="cmdidMyCommand" priority="0x0100" type="Button">
+        <Parent guid="guidVSXMusicCmdSet" id="MyMenuGroup" />
         <Icon guid="guidImages" id="bmpPic1" />
         <Strings>
           <ButtonText>My Command name</ButtonText>
@@ -92,10 +92,10 @@
 
   <Symbols>
     <!-- This is the package guid. -->
-    <GuidSymbol name="guidVS2013Pkg" value="{3a5a6347-784b-42bb-a0a2-5554eee04673}" />
+    <GuidSymbol name="guidVSXMusicPkg" value="{1449b295-ff93-4c18-8071-f5bb6c811f16}" />
     
     <!-- This is the guid used to group the menu commands together -->
-    <GuidSymbol name="guidVS2013CmdSet" value="{cf05f13c-90c8-4bc9-b566-5ddeb7833763}">
+    <GuidSymbol name="guidVSXMusicCmdSet" value="{ade76f79-3be2-4fe8-a733-b1a2fe12fb7f}">
 
       <IDSymbol name="MyMenuGroup" value="0x1020" />
       <IDSymbol name="cmdidMyCommand" value="0x0100" />
@@ -103,7 +103,7 @@
     
     
     
-    <GuidSymbol name="guidImages" value="{a0254d21-062a-4b09-b2cc-b68570c2c814}" >
+    <GuidSymbol name="guidImages" value="{3b4b5aec-fee2-4057-b27f-f2a52323dcff}" >
       <IDSymbol name="bmpPic1" value="1" />
       <IDSymbol name="bmpPic2" value="2" />
       <IDSymbol name="bmpPicSearch" value="3" />

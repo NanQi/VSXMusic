@@ -9,7 +9,7 @@ using Microsoft.VisualStudio.Shell.Interop;
 using Microsoft.VisualStudio.OLE.Interop;
 using Microsoft.VisualStudio.Shell;
 
-namespace Ancientomb.VS2013
+namespace VSXMusic
 {
     /// <summary>
     /// This is the class that implements the package exposed by this assembly.
@@ -29,8 +29,8 @@ namespace Ancientomb.VS2013
     [InstalledProductRegistration("#110", "#112", "1.0", IconResourceID = 400)]
     // This attribute is needed to let the shell know that this package exposes some menus.
     [ProvideMenuResource("Menus.ctmenu", 1)]
-    [Guid(GuidList.guidVS2013PkgString)]
-    public sealed class VS2013Package : Package
+    [Guid(GuidList.guidVSXMusicPkgString)]
+    public sealed class VSXMusicPackage : Package
     {
         /// <summary>
         /// Default constructor of the package.
@@ -39,7 +39,7 @@ namespace Ancientomb.VS2013
         /// not sited yet inside Visual Studio environment. The place to do all the other 
         /// initialization is the Initialize method.
         /// </summary>
-        public VS2013Package()
+        public VSXMusicPackage()
         {
             Debug.WriteLine(string.Format(CultureInfo.CurrentCulture, "Entering constructor for: {0}", this.ToString()));
         }
@@ -64,7 +64,7 @@ namespace Ancientomb.VS2013
             if ( null != mcs )
             {
                 // Create the command for the menu item.
-                CommandID menuCommandID = new CommandID(GuidList.guidVS2013CmdSet, (int)PkgCmdIDList.cmdidMyCommand);
+                CommandID menuCommandID = new CommandID(GuidList.guidVSXMusicCmdSet, (int)PkgCmdIDList.cmdidMyCommand);
                 MenuCommand menuItem = new MenuCommand(MenuItemCallback, menuCommandID );
                 mcs.AddCommand( menuItem );
             }
@@ -85,7 +85,7 @@ namespace Ancientomb.VS2013
             Microsoft.VisualStudio.ErrorHandler.ThrowOnFailure(uiShell.ShowMessageBox(
                        0,
                        ref clsid,
-                       "VS2013",
+                       "VSXMusic",
                        string.Format(CultureInfo.CurrentCulture, "Inside {0}.MenuItemCallback()", this.ToString()),
                        string.Empty,
                        0,

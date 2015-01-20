@@ -2,7 +2,7 @@
 // MUST match PkgCmdID.h
 using System;
 
-namespace Ancientomb.VS2013
+namespace VSXMusic
 {
     static class PkgCmdIDList
     {
