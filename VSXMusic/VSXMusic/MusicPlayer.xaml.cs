@@ -23,34 +23,25 @@ namespace VSXMusic
     /// </summary>
     public partial class MusicPlayer : UserControl
     {
-        private ExportProvider _exportProvider;
-        public MusicPlayer()
+        public MusicPlayer(Lazy<IPlayer> player)
         {
             InitializeComponent();
-            //_exportProvider = ((IComponentModel)Package.GetGlobalService(typeof(SComponentModel))).DefaultExportProvider;
-            //var player = _exportProvider.GetExportedValueOrDefault<IPlayer>();
-
-            //if (player.CurrentChannel == null)
-            //{
-            //    player.CurrentChannel = player.GetChannelList().PublicChannelList.FirstOrDefault();
-            //}
-        }
-
-        private void PlayButton_Click(object sender, RoutedEventArgs e)
-        {
-            //if (Player.IsPlaying)
-            //{
-            //    Player.Pause();
-            //}
-            //else
-            //{
-            //    Player.Play();
-            //}
+            this.DataContext = new MusicPlayerViewModel(player);
         }
     }
 
     public class MusicPlayerViewModel
     {
-        
+        Lazy<IPlayer> _player;
+
+        public IPlayer Player
+        {
+            get { return _player.Value; }
+        }
+
+        public MusicPlayerViewModel(Lazy<IPlayer> player)
+        {
+            _player = player;
+        }
     }
 }

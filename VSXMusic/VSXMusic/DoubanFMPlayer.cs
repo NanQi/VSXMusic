@@ -3,22 +3,56 @@ using System.Linq;
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
 using System.Text;
+using System.IO;
+using System.Diagnostics;
 
 namespace VSXMusic
 {
     [Export(typeof(IPlayer))]
     [Export(typeof(DoubanFMPlayer))]
-    public class DoubanFMPlayer : PlayerBase
+    public class DoubanFMPlayer : Player
     {
-        [Import]
-        public Common.HtmlHelper HtmlHelper { get; set; }
+        Common.HtmlHelper _htmlHelper;
 
-        [Import]
-        public override IAudio Audio { get; set; }
+        [ImportingConstructor]
+        public DoubanFMPlayer(IAudio audio, Common.HtmlHelper htmlHelper) : base(audio)
+        {
+            _htmlHelper = htmlHelper;
+            Initialization();
+        }
 
         public override Models.ChannelList GetChannelList()
         {
-            var json = HtmlHelper.Get("http://doubanfmcloud-channelinfo.stor.sinaapp.com/channelinfo");
+            //尝试获取本地频道列表
+            try
+            {
+                if (File.Exists(Common.Paths.ChannelFile))
+                {
+                    var localChannelTime = File.GetLastWriteTime(Common.Paths.ChannelFile);
+
+                    if (DateTime.Now - localChannelTime < TimeSpan.FromHours(6))
+                    {
+                        var content = File.ReadAllText(Common.Paths.ChannelFile);
+                        return Common.JsonHelper.Deserialize<Models.ChannelList>(content);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(DateTime.Now + " 获取本地频道列表失败：" + ex.Message);
+            }
+
+            var json = _htmlHelper.Get("http://doubanfmcloud-channelinfo.stor.sinaapp.com/channelinfo");
+
+            try
+            {
+                File.WriteAllText(Common.Paths.ChannelFile, json);
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(DateTime.Now + " 写入本地频道列表失败：" + ex.Message);
+            }
+
             return Common.JsonHelper.Deserialize<Models.ChannelList>(json);
         }
 
@@ -44,7 +78,7 @@ namespace VSXMusic
             string url = Common.HtmlHelper.ConstructUrlWithParameters("http://douban.fm/j/mine/playlist", parameters);
 
             //获取列表
-            string json = HtmlHelper.Get(url, @"application/json, text/javascript, */*; q=0.01", @"http://douban.fm");
+            string json = _htmlHelper.Get(url, @"application/json, text/javascript, */*; q=0.01", @"http://douban.fm");
             var songList = Common.JsonHelper.Deserialize<Models.SongList>(json);
 
             //将小图更换为大图

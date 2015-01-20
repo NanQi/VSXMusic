@@ -4,7 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="300">
+             d:DesignWidth="330">
     <UserControl.Resources>
         <LinearGradientBrush x:Key="NormalBrush" StartPoint="0,0" EndPoint="0,1">
             <GradientStop Color="#202020" Offset="0.0"/>
@@ -235,7 +235,7 @@
                                     Duration="00:00:0.25" 
                                     Storyboard.TargetName="ExpandSite" 
                                     Storyboard.TargetProperty="(FrameworkElement.LayoutTransform).(TransformGroup.Children)[0].(ScaleTransform.ScaleX)">
-                                    <SplineDoubleKeyFrame KeyTime="00:00:0.25" Value="1"/>
+                                    <SplineDoubleKeyFrame KeyTime="00:00:0.25" Value="0"/>
                                 </DoubleAnimationUsingKeyFrames>
                             </Storyboard>
                             <Storyboard x:Key="Timeline2" AccelerationRatio="0.4">
@@ -243,7 +243,7 @@
                                                                Duration="00:00:00.45" 
                                                                Storyboard.TargetName="ExpandSite" 
                                                                Storyboard.TargetProperty="(FrameworkElement.LayoutTransform).(TransformGroup.Children)[0].(ScaleTransform.ScaleX)">
-                                    <SplineDoubleKeyFrame KeyTime="00:00:0.45" Value="0"/>
+                                    <SplineDoubleKeyFrame KeyTime="00:00:0.45" Value="1"/>
                                 </DoubleAnimationUsingKeyFrames>
                             </Storyboard>
                         </ControlTemplate.Resources>
@@ -279,7 +279,7 @@
                                                   DockPanel.Dock="Bottom">
                                     <ContentPresenter.LayoutTransform>
                                         <TransformGroup>
-                                            <ScaleTransform ScaleX="0" ScaleY="1"/>
+                                            <ScaleTransform ScaleX="1" ScaleY="1"/>
                                             <SkewTransform AngleX="0" AngleY="0"/>
                                             <RotateTransform Angle="0"/>
                                             <TranslateTransform X="0" Y="0"/>
@@ -289,7 +289,7 @@
                             </DockPanel>
                         </Border>
                         <ControlTemplate.Triggers>
-                            <Trigger Property="IsExpanded" Value="True">
+                            <Trigger Property="IsExpanded" Value="False">
                                 <Trigger.EnterActions>
                                     <BeginStoryboard Storyboard="{StaticResource Timeline1}"/>
                                 </Trigger.EnterActions>
@@ -321,8 +321,8 @@
             </Setter>
         </Style>
     </UserControl.Resources>
-    <Expander ExpandDirection="Left" Style="{DynamicResource ExpanderStyle1}" x:Name="expMain" >
-        <Grid Name="Grid">
+    <Expander ExpandDirection="Left" Style="{DynamicResource ExpanderStyle1}" x:Name="expMain" IsExpanded="True">
+        <Grid Name="Grid" Width="300">
             <Grid.Style>
                 <Style TargetType="{x:Type Grid}">
                     <Setter Property="Opacity" Value="1" />
@@ -391,13 +391,50 @@
                 </Rectangle.Fill>
             </Rectangle>
             <StackPanel>
-                <Button x:Name="PlayButton" Cursor="Arrow" Content="Play" Margin="10" Click="PlayButton_Click"/>
-                <Expander x:Name="expCodeInfo" ExpandDirection="Down" Header="Code Information">
-                    <StackPanel>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+                    <StackPanel Orientation="Horizontal" Margin="10">
+                        <TextBlock Text="当前频道：" />
+                        <TextBlock Text="{Binding Player.CurrentChannel.Name}" d:DataContext="当前频道" Foreground="Yellow" />
+                    </StackPanel>
+                    <Button Content="换台" Cursor="Arrow" Grid.Column="1" Margin="5"/>
+                </Grid>
 
+                <Expander x:Name="expCodeInfo" ExpandDirection="Down" Header="歌曲信息" IsExpanded="True">
+                    <StackPanel>
+                        <Image Source="{Binding Player.CurrentSong.Picture}" Width="290" Height="290"/>
+                        <TextBlock Text="{Binding Player.CurrentSong.Title}" FontSize="18" FontWeight="Bold" Foreground="LightYellow"/>
+                        <TextBlock Text="{Binding Player.CurrentSong.AlbumTitle}" Foreground="LightYellow" />
                     </StackPanel>
                 </Expander>
             </StackPanel>
         </Grid>
+
+        
     </Expander>
+
+    <!--<StackPanel>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            <StackPanel Orientation="Horizontal" Margin="10">
+                <TextBlock Text="当前频道：" />
+                <TextBlock Text="{Binding Player.CurrentChannel.Name}" d:DataContext="当前频道" />
+            </StackPanel>
+            <Button Content="换台" Cursor="Arrow" Grid.Column="1"/>
+        </Grid>
+
+        <Expander x:Name="expCodeInfo" ExpandDirection="Down" Header="歌曲信息">
+            <StackPanel>
+                <Image Source="{Binding Player.CurrentSong.Picture}" />
+                <TextBlock Text="{Binding Player.CurrentSong.Title}" FontSize="28" FontWeight="Bold" />
+                <TextBlock Text="{Binding Player.CurrentSong.AlbumTitle}" Foreground="Cyan" />
+            </StackPanel>
+        </Expander>
+    </StackPanel>-->
 </UserControl>

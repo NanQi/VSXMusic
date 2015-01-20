@@ -16,7 +16,7 @@ namespace VSXMusic
         TimeSpan TotalTime { get; }
         double Volumn { get; set; }
         bool IsPlaying { get; set; }
-        bool CanPlay { get; set; }
+        bool CanPlay { get; }
 
         void Play();
 

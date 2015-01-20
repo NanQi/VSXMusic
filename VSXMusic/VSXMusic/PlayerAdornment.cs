@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.Composition;
+﻿using System;
+using System.ComponentModel.Composition;
 using System.Windows.Controls;
 using Microsoft.VisualStudio.Text.Editor;
 using Microsoft.VisualStudio.Utilities;
@@ -12,7 +13,7 @@ namespace VSXMusic
     {
         const string AdornmentName = "PlayerAdornment";
 
-        private MusicPlayer _player;
+        private MusicPlayer _musicPlayer;
         private IAdornmentLayer _adornmentLayer;
         private IWpfTextView _textView;
 
@@ -22,11 +23,14 @@ namespace VSXMusic
         [TextViewRole(PredefinedTextViewRoles.Interactive)]
         public AdornmentLayerDefinition editorAdornmentLayer = null;
 
+        [Import]
+        public Lazy<IPlayer> Player { get; set; }
+
         public void TextViewCreated(IWpfTextView textView)
         {
             _textView = textView;
             _adornmentLayer = textView.GetAdornmentLayer(AdornmentName);
-            _player = new MusicPlayer();
+            _musicPlayer = new MusicPlayer(Player);
 
             _textView.ViewportHeightChanged += OnSizeChange;
             _textView.ViewportWidthChanged += OnSizeChange;
@@ -36,10 +40,10 @@ namespace VSXMusic
         {
             _adornmentLayer.RemoveAllAdornments();
 
-            Canvas.SetLeft(_player, _textView.ViewportRight - 255);
-            Canvas.SetTop(_player, _textView.ViewportTop + 10);
+            Canvas.SetLeft(_musicPlayer, _textView.ViewportRight - 335);
+            Canvas.SetTop(_musicPlayer, _textView.ViewportTop + 10);
 
-            _adornmentLayer.AddAdornment(AdornmentPositioningBehavior.ViewportRelative, null, null, _player, null);
+            _adornmentLayer.AddAdornment(AdornmentPositioningBehavior.ViewportRelative, null, null, _musicPlayer, null);
         }
     }
 }

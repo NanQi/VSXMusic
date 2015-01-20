@@ -1,116 +1,198 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <CommandTable xmlns="http://schemas.microsoft.com/VisualStudio/2005-10-18/CommandTable" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+    <Extern href="stdidcmd.h"/>
+    <Extern href="vsshlids.h"/>
+    <Commands package="guidVSXMusicPkg">
+        <Menus>
 
-  <!--  This is the file that defines the actual layout and type of the commands.
-        It is divided in different sections (e.g. command definition, command
-        placement, ...), with each defining a specific set of properties.
-        See the comment before each section for more details about how to
-        use it. -->
+            <Menu guid="guidVSXMusicCmdSet" id="VSXMusicMainMenu" priority="0xFD00" type="Menu">
+                <Parent guid="guidSHLMainMenu" id="IDG_VS_MM_TOOLSADDINS" />
+                <Strings>
+                    <ButtonText>VSXMusic</ButtonText>
+                    <CommandName>VSXMusic(&amp;U)</CommandName>
+                </Strings>
+            </Menu>
 
-  <!--  The VSCT compiler (the tool that translates this file into the binary 
-        format that VisualStudio will consume) has the ability to run a preprocessor 
-        on the vsct file; this preprocessor is (usually) the C++ preprocessor, so 
-        it is possible to define includes and macros with the same syntax used 
-        in C++ files. Using this ability of the compiler here, we include some files 
-        defining some of the constants that we will use inside the file. -->
+            <Menu guid="guidVSXMusicCmdSet" id="VSXMusicMainToolbar" priority="0x0001" type="Toolbar">
+                <Parent guid="guidSHLMainMenu" id="IDM_VS_TOOL_STANDARD" />
+                <Strings>
+                    <ButtonText>1. VSXMusic</ButtonText>
+                </Strings>
+            </Menu>
+        </Menus>
 
-  <!--This is the file that defines the IDs for all the commands exposed by VisualStudio. -->
-  <Extern href="stdidcmd.h"/>
+        <Groups>
+            <Group guid="guidVSXMusicCmdSet" id="PlayerMenuGroup" priority="0x0100">
+                <Parent guid="guidVSXMusicCmdSet" id="VSXMusicMainMenu" />
+                <GroupFlag>Dynamic</GroupFlag>
+            </Group>
 
-  <!--This header contains the command ids for the menus provided by the shell. -->
-  <Extern href="vsshlids.h"/>
+            <Group guid="guidVSXMusicCmdSet" id="PlayerToolbarGroup" priority="0x0100">
+                <Parent guid="guidVSXMusicCmdSet" id="VSXMusicMainToolbar" />
+                <GroupFlag>Dynamic</GroupFlag>
+            </Group>
+        </Groups>
+
+        <Buttons>
+
+            <Button guid="guidVSXMusicCmdSet" id="cmdidPlay" type="Button">
+                <Icon guid="guidImages" id="1" />
+                <CommandFlag>DynamicVisibility</CommandFlag>
+                <Strings>
+                    <CommandName>VSXMusic Play</CommandName>
+                    <MenuText>播放(&amp;P)</MenuText>
+                    <ButtonText>播放(&amp;P)</ButtonText>
+                    <ToolTipText>播放</ToolTipText>
+                </Strings>
+            </Button>
+
+            <Button guid="guidVSXMusicCmdSet" id="cmdidPause" type="Button">
+                <Icon guid="guidImages" id="2" />
+                <CommandFlag>DynamicVisibility</CommandFlag>
+                <CommandFlag>DefaultInvisible</CommandFlag>
+                <Strings>
+                    <CommandName>VSXMusic Pause</CommandName>
+                    <MenuText>暂停(&amp;P)</MenuText>
+                    <ButtonText>暂停(&amp;P)</ButtonText>
+                    <ToolTipText>暂停</ToolTipText>
+                </Strings>
+            </Button>
+
+            <Button guid="guidVSXMusicCmdSet" id="cmdidNext" type="Button">
+                <Icon guid="guidImages" id="3" />
+                <CommandFlag>DynamicVisibility</CommandFlag>
+                <CommandFlag>DefaultInvisible</CommandFlag>
+                <Strings>
+                    <CommandName>VSXMusic Next</CommandName>
+                    <MenuText>切歌(&amp;P)</MenuText>
+                    <ButtonText>切歌(&amp;P)</ButtonText>
+                    <ToolTipText>切歌</ToolTipText>
+                </Strings>
+            </Button>
+
+            <Button guid="guidVSXMusicCmdSet" id="cmdidNever" type="Button">
+                <Icon guid="guidImages" id="4" />
+                <CommandFlag>DynamicVisibility</CommandFlag>
+                <CommandFlag>DefaultInvisible</CommandFlag>
+                <Strings>
+                    <CommandName>VSXMusic Never</CommandName>
+                    <MenuText>不播放(&amp;P)</MenuText>
+                    <ButtonText>不播放(&amp;P)</ButtonText>
+                    <ToolTipText>不播放</ToolTipText>
+                </Strings>
+            </Button>
+
+            <Button guid="guidVSXMusicCmdSet" id="cmdidLike" type="Button">
+                <Icon guid="guidImages" id="5" />
+                <CommandFlag>DynamicVisibility</CommandFlag>
+                <CommandFlag>DefaultInvisible</CommandFlag>
+                <Strings>
+                    <CommandName>VSXMusic Like</CommandName>
+                    <MenuText>喜欢(&amp;P)</MenuText>
+                    <ButtonText>喜欢(&amp;P)</ButtonText>
+                    <ToolTipText>喜欢</ToolTipText>
+                </Strings>
+            </Button>
+
+            <Button guid="guidVSXMusicCmdSet" id="cmdidUnlike" type="Button">
+                <Icon guid="guidImages" id="6" />
+                <CommandFlag>DynamicVisibility</CommandFlag>
+                <CommandFlag>DefaultInvisible</CommandFlag>
+                <Strings>
+                    <CommandName>VSXMusic Unlike</CommandName>
+                    <MenuText>不喜欢(&amp;P)</MenuText>
+                    <ButtonText>不喜欢(&amp;P)</ButtonText>
+                    <ToolTipText>不喜欢</ToolTipText>
+                </Strings>
+            </Button>
+        </Buttons>
+
+        <Bitmaps>
+            <Bitmap guid="guidImages" href="Resources\Images.png" usedList="bmpPlay, bmpPause, bmpNext, bmpNever, bmpLike, bmpUnlike"/>
+        </Bitmaps>
+    </Commands>
+
+    <CommandPlacements>
+        <!--MainMenuGroup Start-->
+        <CommandPlacement guid="guidVSXMusicCmdSet" id="cmdidPlay" priority="0x0100">
+            <Parent guid="guidVSXMusicCmdSet" id="PlayerMenuGroup" />
+        </CommandPlacement>
+
+        <CommandPlacement guid="guidVSXMusicCmdSet" id="cmdidPause" priority="0x0101">
+            <Parent guid="guidVSXMusicCmdSet" id="PlayerMenuGroup" />
+        </CommandPlacement>
+
+        <CommandPlacement guid="guidVSXMusicCmdSet" id="cmdidNext" priority="0x0102">
+            <Parent guid="guidVSXMusicCmdSet" id="PlayerMenuGroup" />
+        </CommandPlacement>
+
+        <CommandPlacement guid="guidVSXMusicCmdSet" id="cmdidNever" priority="0x0103">
+            <Parent guid="guidVSXMusicCmdSet" id="PlayerMenuGroup" />
+        </CommandPlacement>
+
+        <CommandPlacement guid="guidVSXMusicCmdSet" id="cmdidLike" priority="0x0104">
+            <Parent guid="guidVSXMusicCmdSet" id="PlayerMenuGroup" />
+        </CommandPlacement>
+
+        <CommandPlacement guid="guidVSXMusicCmdSet" id="cmdidUnlike" priority="0x0105">
+            <Parent guid="guidVSXMusicCmdSet" id="PlayerMenuGroup" />
+        </CommandPlacement>
+        <!--MainMenuGroup End-->
+
+        <!--PlayerToolbarGroup Start-->
+        <CommandPlacement guid="guidVSXMusicCmdSet" id="cmdidPlay" priority="0x0100">
+            <Parent guid="guidVSXMusicCmdSet" id="PlayerToolbarGroup" />
+        </CommandPlacement>
+
+        <CommandPlacement guid="guidVSXMusicCmdSet" id="cmdidPause" priority="0x0101">
+            <Parent guid="guidVSXMusicCmdSet" id="PlayerToolbarGroup" />
+        </CommandPlacement>
+
+        <CommandPlacement guid="guidVSXMusicCmdSet" id="cmdidNext" priority="0x0102">
+            <Parent guid="guidVSXMusicCmdSet" id="PlayerToolbarGroup" />
+        </CommandPlacement>
+
+        <CommandPlacement guid="guidVSXMusicCmdSet" id="cmdidNever" priority="0x0103">
+            <Parent guid="guidVSXMusicCmdSet" id="PlayerToolbarGroup" />
+        </CommandPlacement>
+
+        <CommandPlacement guid="guidVSXMusicCmdSet" id="cmdidLike" priority="0x0104">
+            <Parent guid="guidVSXMusicCmdSet" id="PlayerToolbarGroup" />
+        </CommandPlacement>
+
+        <CommandPlacement guid="guidVSXMusicCmdSet" id="cmdidUnlike" priority="0x0105">
+            <Parent guid="guidVSXMusicCmdSet" id="PlayerToolbarGroup" />
+        </CommandPlacement>
+        <!--PlayerToolbarGroup End-->
+    </CommandPlacements>
 
 
+    <Symbols>
+        <GuidSymbol name="guidVSXMusicPkg" value="{1449b295-ff93-4c18-8071-f5bb6c811f16}" />
+        <GuidSymbol name="guidVSXMusicCmdSet" value="{ade76f79-3be2-4fe8-a733-b1a2fe12fb7f}">
+            <IDSymbol name="cmdidPlay" value="0x0100" />
+            <IDSymbol name="cmdidPause" value="0x0101" />
+            <IDSymbol name="cmdidNext" value="0x0102" />
+            <IDSymbol name="cmdidNever" value="0x0103" />
+            <IDSymbol name="cmdidLike" value="0x0104" />
+            <IDSymbol name="cmdidUnlike" value="0x0105" />
 
 
-  <!--The Commands section is where we the commands, menus and menu groups are defined.
-      This section uses a Guid to identify the package that provides the command defined inside it. -->
-  <Commands package="guidVSXMusicPkg">
-    <!-- Inside this section we have different sub-sections: one for the menus, another  
-    for the menu groups, one for the buttons (the actual commands), one for the combos 
-    and the last one for the bitmaps used. Each element is identified by a command id that  
-    is a unique pair of guid and numeric identifier; the guid part of the identifier is usually  
-    called "command set" and is used to group different command inside a logically related  
-    group; your package should define its own command set in order to avoid collisions  
-    with command ids defined by other packages. -->
+            <IDSymbol name="VSXMusicMainMenu" value="0x1020" />
+            <IDSymbol name="PlayerMenuGroup" value="0x1021" />
 
-    
-    <!-- In this section you can define new menu groups. A menu group is a container for 
-         other menus or buttons (commands); from a visual point of view you can see the 
-         group as the part of a menu contained between two lines. The parent of a group 
-         must be a menu. -->
-    <Groups>
+            <IDSymbol name="VSXMusicMainToolbar" value="0x2020" />
+            <IDSymbol name="PlayerToolbarGroup" value="0x2021" />
+        </GuidSymbol>
 
-      <Group guid="guidVSXMusicCmdSet" id="MyMenuGroup" priority="0x0600">
-        <Parent guid="guidSHLMainMenu" id="IDM_VS_MENU_TOOLS"/>
-      </Group>
-      
-
-
-    </Groups>
-    
-    <!--Buttons section. -->
-    <!--This section defines the elements the user can interact with, like a menu command or a button 
-        or combo box in a toolbar. -->
-    <Buttons>
-      <!--To define a menu group you have to specify its ID, the parent menu and its display priority. 
-          The command is visible and enabled by default. If you need to change the visibility, status, etc, you can use
-          the CommandFlag node.
-          You can add more than one CommandFlag node e.g.:
-              <CommandFlag>DefaultInvisible</CommandFlag>
-              <CommandFlag>DynamicVisibility</CommandFlag>
-          If you do not want an image next to your command, remove the Icon node /> -->
-
-      <Button guid="guidVSXMusicCmdSet" id="cmdidMyCommand" priority="0x0100" type="Button">
-        <Parent guid="guidVSXMusicCmdSet" id="MyMenuGroup" />
-        <Icon guid="guidImages" id="bmpPic1" />
-        <Strings>
-          <ButtonText>My Command name</ButtonText>
-        </Strings>
-      </Button>
-
-
-
-    </Buttons>
-   
-    <!--The bitmaps section is used to define the bitmaps that are used for the commands.-->
-    <Bitmaps>
-      <!--  The bitmap id is defined in a way that is a little bit different from the others: 
-            the declaration starts with a guid for the bitmap strip, then there is the resource id of the 
-            bitmap strip containing the bitmaps and then there are the numeric ids of the elements used 
-            inside a button definition. An important aspect of this declaration is that the element id 
-            must be the actual index (1-based) of the bitmap inside the bitmap strip. -->
-      <Bitmap guid="guidImages" href="Resources\Images.png" usedList="bmpPic1, bmpPic2, bmpPicSearch, bmpPicX, bmpPicArrows"/>
-      
-    </Bitmaps>
- 
-  </Commands>
-
-
-
-
-
-  <Symbols>
-    <!-- This is the package guid. -->
-    <GuidSymbol name="guidVSXMusicPkg" value="{1449b295-ff93-4c18-8071-f5bb6c811f16}" />
-    
-    <!-- This is the guid used to group the menu commands together -->
-    <GuidSymbol name="guidVSXMusicCmdSet" value="{ade76f79-3be2-4fe8-a733-b1a2fe12fb7f}">
-
-      <IDSymbol name="MyMenuGroup" value="0x1020" />
-      <IDSymbol name="cmdidMyCommand" value="0x0100" />
-    </GuidSymbol>
-    
-    
-    
-    <GuidSymbol name="guidImages" value="{3b4b5aec-fee2-4057-b27f-f2a52323dcff}" >
-      <IDSymbol name="bmpPic1" value="1" />
-      <IDSymbol name="bmpPic2" value="2" />
-      <IDSymbol name="bmpPicSearch" value="3" />
-      <IDSymbol name="bmpPicX" value="4" />
-      <IDSymbol name="bmpPicArrows" value="5" />
-      <IDSymbol name="bmpPicStrikethrough" value="6" />
-    </GuidSymbol>
-  </Symbols>
+        <GuidSymbol name="guidImages" value="{3b4b5aec-fee2-4057-b27f-f2a52323dcff}" >
+            <IDSymbol name="bmpPlay" value="1" />
+            <IDSymbol name="bmpPause" value="2" />
+            <IDSymbol name="bmpNext" value="3" />
+            <IDSymbol name="bmpNever" value="4" />
+            <IDSymbol name="bmpLike" value="5" />
+            <IDSymbol name="bmpUnlike" value="6" />
+        </GuidSymbol>
+    </Symbols>
 
 </CommandTable>

@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <PackageManifest Version="2.0.0" xmlns="http://schemas.microsoft.com/developer/vsx-schema/2011" xmlns:d="http://schemas.microsoft.com/developer/vsx-schema-design/2011">
     <Metadata>
-        <Identity Id="1449b295-ff93-4c18-8071-f5bb6c811f16" Version="1.0" Language="en-US" Publisher="Ancientomb" />
+        <Identity Id="1449b295-ff93-4c18-8071-f5bb6c811f16" Version="1.0" Language="zh-CN" Publisher="Ancientomb" />
         <DisplayName>VSXMusic</DisplayName>
         <Description>Information about my package</Description>
     </Metadata>

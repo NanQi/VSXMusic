@@ -6,20 +6,27 @@ using System.Text;
 
 namespace VSXMusic
 {
-    public abstract class PlayerBase : IPlayer
+    public abstract class Player : Models.ViewModelBase, IPlayer
     {
-        public abstract IAudio Audio { get; set; }
+        public IAudio Audio { get; set; }
 
         Models.SongList _songList;
 
-        public PlayerBase()
+        public Player(IAudio audio)
         {
-            //Audio.MediaEnded += OnMediaEnded;
+            Audio = audio;
+            Audio.MediaEnded += (s, e) => Next();
         }
 
-        private void OnMediaEnded(object sender, EventArgs e)
+        protected void Initialization()
         {
-            Next();
+            if (this.CurrentChannel == null)
+            {
+                _currentChannel = this.GetChannelList().PublicChannelList.OrderBy(_ => new Guid()).First();
+                _songList = this.GetSongList(_currentChannel, _currentSong);
+                _currentSong = _songList.Songs.FirstOrDefault();
+                Audio.Url = _currentSong.Url;
+            }
         }
 
         #region IPlayer 成员
@@ -100,6 +107,7 @@ namespace VSXMusic
                     _currentChannel = value;
                     _songList = this.GetSongList(_currentChannel, _currentSong);
                     CurrentSong = _songList.Songs.FirstOrDefault();
+                    OnPropertyChanged(() => CurrentChannel);
                 }
             }
         }
@@ -119,6 +127,7 @@ namespace VSXMusic
                     _currentSong = value;
                     Audio.Url = _currentSong.Url;
                     Play();
+                    OnPropertyChanged(() => CurrentSong);
                 }
             }
         }
@@ -154,22 +163,29 @@ namespace VSXMusic
                 Audio.Volume = value;
             }
         }
+        bool _isPlaying;
 
         public bool IsPlaying
         {
-            get;
-            set;
+            get
+            {
+                return _isPlaying;
+            }
+            set
+            {
+                if (_isPlaying != value)
+                {
+                    _isPlaying = value;
+                    OnPropertyChanged(() => IsPlaying);
+                }
+            }
         }
 
         public bool CanPlay
         {
             get
             {
-                throw new NotImplementedException();
-            }
-            set
-            {
-                throw new NotImplementedException();
+                return this.CurrentSong != null && !this.IsPlaying;
             }
         }
 

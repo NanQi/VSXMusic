@@ -27,6 +27,10 @@ namespace VSXMusic.Common
         /// </summary>
         public static readonly string CookiesFile = Path.Combine(DataFolder, "Cookies.dat");
         /// <summary>
+        /// Channel文件路径
+        /// </summary>
+        public static readonly string ChannelFile = Path.Combine(DataFolder, "Channel.dat");
+        /// <summary>
         /// 用户信息文件路径
         /// </summary>
         public static readonly string UserInfoFile = Path.Combine(DataFolder, "UserInfo.dat");
